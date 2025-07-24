@@ -1,12 +1,13 @@
 # Federated-Learning (PyTorch)
+This is still a work in progress and experiments are currently being run. The code and results are not accurate yet and will be updated soon.
 
 Building on the vanilla federated learning paper : [Communication-Efficient Learning of Deep Networks from Decentralized Data](https://arxiv.org/abs/1602.05629).
 
-
-Experiments are produced on MNIST, Fashion MNIST and CIFAR10 (both IID and non-IID). In case of non-IID, the data amongst the users can be split equally or unequally.
+Mainly experiments are produced on CIFAR10 (both IID and non-IID). Dirlicht distribution used for sampling data.
 
 Since the purpose of these experiments in paper are to illustrate the effectiveness of the federated learning paradigm, only simple models such as MLP and CNN are used.
 The added GMB framework
+
 ## Requirments
 Install all the packages from requirments.txt
 * Python3
@@ -21,27 +22,26 @@ Install all the packages from requirments.txt
 ## Running the experiments
 The baseline experiment trains the model in the conventional way.
 
-* To run the baseline experiment with MNIST on MLP using CPU:
+* To run the FedAvg experiment with CIFAR10 on CNN using CPU:
 ```
 python src/baseline_main.py --model=mlp --dataset=mnist --epochs=10
 ```
-* Or to run it on GPU (eg: if gpu:0 is available):
+* To run the FedAvg experiment with CIFAR10 on CNN using CPU:
 ```
-python src/baseline_main.py --model=mlp --dataset=mnist --gpu=0 --epochs=10
+python src/baseline_main.py --model=mlp --dataset=mnist --epochs=10
+```
+* To run the FedAvg experiment with CIFAR10 on CNN using CPU:
+```
+python src/baseline_main.py --model=mlp --dataset=mnist --epochs=10
 ```
 -----
 
 Federated experiment involves training a global model using many local models.
 
 * To run the federated experiment with CIFAR on CNN (IID):
-```
-python src/federated_main_gmb1.py --model=cnn --dataset=cifar --gpu=0 --iid=1 --epochs=10
-python src/federated_main_gmb1.py --model=cnn --dataset=cifar --iid=1 --epochs=10  --> no gpu
-```
+
 * To run the same experiment under non-IID condition:
-```
-python src/federated_main.py --model=cnn --dataset=cifar --gpu=0 --iid=0 --epochs=10
-```
+
 
 You can change the default values of other parameters to simulate different conditions. Refer to the options section.
 
@@ -64,24 +64,8 @@ The default values for various paramters parsed to the experiment are given in `
 * ```--local_bs:``` Batch size of local updates in each user. Default is 10.
 * ```--unequal:```  Used in non-iid setting. Option to split the data amongst users equally or unequally. Default set to 0 for equal splits. Set to 1 for unequal splits.
 
-## Results on MNIST
-#### Baseline Experiment:
-The experiment involves training a single model in the conventional way.
-
-Parameters: <br />
-* ```Optimizer:```    : SGD 
-* ```Learning Rate:``` 0.01
-
-```Table 1:``` Test accuracy after training for 10 epochs:
-
-| Model | Test Acc |
-| ----- | -----    |
-|  MLP  |  92.71%  |
-|  CNN  |  98.42%  |
-
-----
-
-#### Federated Experiment:
+## Results on CIFAR10
+#### FedAvg:
 The experiment involves training a global model in the federated setting.
 
 Federated parameters (default values):
@@ -97,7 +81,15 @@ Federated parameters (default values):
 | ----- | -----    |----            |
 |  MLP  |  88.38%  |     73.49%     |
 |  CNN  |  97.28%  |     75.94%     |
+#### FedProx:
+#### SCAFFOLD:
+#### GMB:
+## Results on CIFAR100
+#### FedAvg:
 
+#### FedProx:
+#### SCAFFOLD:
+#### GMB:
 
 ## Further Readings
 ### Papers:
